@@ -1,15 +1,19 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
+  // Автоматически определяем, если это GitHub Pages
+  ...(process.env.GITHUB_ACTIONS && {
+    basePath: '/your-repo-name',
+    assetPrefix: '/your-repo-name/',
+  }),
   eslint: {
     ignoreDuringBuilds: true,
   },
+  output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true
-  },
-  basePath: '/cozzy-to-do',
-  assetPrefix: '/cozzy-to-do',
-
+  }
 }
+
 module.exports = nextConfig

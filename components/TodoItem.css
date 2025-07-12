@@ -6,7 +6,7 @@
 }
 
 .todo {
-  padding:18px;
+  padding: 0;
   border-radius: var(--border-radius);
   transition: all 0.2s ease;
   cursor: pointer;
