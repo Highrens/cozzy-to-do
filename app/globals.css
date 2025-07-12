@@ -4,9 +4,9 @@
 
 :root {
   --color-bg: rgb(104, 95, 120);
-  --color-fg: rgb(79, 68, 77);
+  --color-fg: rgb(0, 0, 0);
   --font-family: 'Arial';
-  --border-radius: 50px;
+  --border-radius: 25px;
   --color-secondary: rgb(156, 140, 184);
   --color-primary: rgb(104, 95, 120);
   --transition: all .5s ease-in-out;

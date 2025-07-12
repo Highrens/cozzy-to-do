@@ -1,0 +1,144 @@
+/* TodoItem.module.css */
+
+.todoWrapper {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.todo {
+  padding:18px;
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.todo:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.selected .todo {
+  background-color: #e3f2fd;
+  border-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #212529;
+  line-height: 1.5;
+}
+
+.title_done {
+  font-size: 16px;
+  font-weight: 500;
+  color: #6c757d;
+  line-height: 1.5;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Панель с кнопками */
+.actionsPanel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  opacity: 0;
+  background: linear-gradient(to bottom, rgba(33, 150, 243, 0.05), rgba(33, 150, 243, 0.1));
+  border-radius: 0 0 8px 8px;
+  margin-top: -8px;
+  padding-top: 8px;
+}
+
+.actionsVisible {
+  max-height: 80px; /* Достаточно для размещения кнопок */
+  opacity: 1;
+  transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  justify-content: flex-end;
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+.actionsVisible .actions {
+  transform: translateY(0);
+}
+
+/* Стили кнопок */
+.donebutton, .editbutton, .deletebutton {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.donebutton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.donebutton:hover {
+  background-color: #45a049;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.editbutton {
+  background-color: #2196f3;
+  color: white;
+}
+
+.editbutton:hover {
+  background-color: #1976d2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+}
+
+.deletebutton {
+  background-color: #f44336;
+  color: white;
+}
+
+.deletebutton:hover {
+  background-color: #d32f2f;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+}
+
+/* Анимация появления кнопок */
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.actionsVisible .actions button {
+  animation: slideDown 0.3s ease forwards;
+}
+
+.actionsVisible .actions button:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.actionsVisible .actions button:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.actionsVisible .actions button:nth-child(3) {
+  animation-delay: 0.3s;
+}
