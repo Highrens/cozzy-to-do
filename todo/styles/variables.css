@@ -1,0 +1,10 @@
+/* app/globals.css */
+@import '../styles/variables.css';
+@import '../styles/animations.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+}

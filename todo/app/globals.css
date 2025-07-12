@@ -1,0 +1,27 @@
+/* app/globals.css */
+@import '../styles/variables.css';
+@import '../styles/animations.css';
+
+:root {
+  --color-bg: rgb(104, 95, 120);
+  --color-fg: rgb(79, 68, 77);
+  --font-family: 'Arial';
+  --border-radius: 50px;
+  --color-secondary: rgb(156, 140, 184);
+  --color-primary: rgb(104, 95, 120);
+  --transition: all .5s ease-in-out;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+.todoitem {
+  padding: 15px;
+  margin: 10px 0 ;
+  background-color: white;
+    border-radius: var(--border-radius);
+}
