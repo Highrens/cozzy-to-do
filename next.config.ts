@@ -8,9 +8,8 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  basePath: '/cozzy-to-do/',
-  assetPrefix: '/cozzy-to-do/',
+  basePath: '/cozzy-to-do',
+  assetPrefix: '/cozzy-to-do',
 
 }
-
 module.exports = nextConfig
