@@ -26,7 +26,7 @@ export default function SortableTodo({ todo }: Props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <TodoItem todo={todo} />
+      {/* <TodoItem todo={todo} /> */}
     </div>
   );
 }

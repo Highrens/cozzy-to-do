@@ -106,8 +106,8 @@ export const TodoItem: React.FC<Props> = ({
       }
     }, 500);
 
-    if (listeners.onPointerDown) {
-      listeners.onPointerDown(e);
+    if (listeners && listeners.onPointerDown) {
+      listeners && listeners.onPointerDown(e);
     }
   };
 
@@ -129,8 +129,8 @@ export const TodoItem: React.FC<Props> = ({
       }
     }
 
-    if (listeners.onPointerMove) {
-      listeners.onPointerMove(e);
+    if (listeners && listeners.onPointerMove) {
+      listeners && listeners.onPointerMove(e);
     }
   };
 
@@ -142,8 +142,8 @@ export const TodoItem: React.FC<Props> = ({
       timeoutRef.current = null;
     }
 
-    if (listeners.onPointerUp) {
-      listeners.onPointerUp(e);
+    if (listeners && listeners.onPointerUp) {
+      listeners && listeners.onPointerUp(e);
     }
 
     if (isDragMode) {
