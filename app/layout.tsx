@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-
+import './globals.css'
 export const metadata = {
   title: 'Список дел',
   description: 'Совместное управление списком дел по ключевому слову',
