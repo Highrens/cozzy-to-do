@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSortable, AnimateLayoutChanges } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Todo } from '@/types/todo';
-import styles from './TodoItem.module.css';
+import './TodoItem.css';
 import { useTodos } from '@/hooks/useTodos';
 
 interface Props {
@@ -198,7 +198,7 @@ export const TodoItem: React.FC<Props> = ({
   }, []);
 
   return (
-    <div className={styles.todoWrapper}>
+    <div className='todoWrapper'>
       <div
         ref={setNodeRef}
         style={style}
@@ -207,29 +207,29 @@ export const TodoItem: React.FC<Props> = ({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerLeave}
-        className={`todoitem ${isSelected ? styles.selected : ''}`}
+        className={`todoitem ${isSelected ? 'selected' : ''}`}
       >
-        <div className={styles.todo}>
-          <span className={todo.completed ? styles.title_done : styles.title}>
+        <div className='todo'>
+          <span className={todo.completed ? 'title_done' : 'title'}>
             {todo.title}
           </span>
         </div>
       </div>
       
       {/* Кнопки появляются под карточкой */}
-      <div className={`${styles.actionsPanel} ${isSelected && !isDragMode ? styles.actionsVisible : ''}`}>
-        <div className={styles.actions}>
+      <div className={`${'actionsPanel'} ${isSelected && !isDragMode ? 'actionsVisible' : ''}`}>
+        <div className={'actions'}>
           <button
             onClick={(e) => {
               e.stopPropagation();
               handleCompleteClick();
             }}
-            className={styles.donebutton}
+            className='donebutton'
           >
             {todo.completed ? 'Восстановить' : 'Завершить'}
           </button>
           <button
-            className={styles.editbutton}
+            className='editbutton'
             onClick={(e) => {
               e.stopPropagation();
               handleEditClick();
@@ -238,7 +238,7 @@ export const TodoItem: React.FC<Props> = ({
             Редактировать
           </button>
           <button
-            className={styles.deletebutton}
+            className='deletebutton'
             onClick={(e) => {
               e.stopPropagation();
               handleDeleteClick();

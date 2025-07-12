@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useTodoStore } from '@/hooks/todos.store';
 import { supabase } from '@/lib/supabaseClient';
-import styles from './AddTodoForm.module.css';
+import './AddTodoForm.css';
 import { useTodos } from '@/hooks/useTodos';
 
 export default function AddTodoForm() {
@@ -32,16 +32,16 @@ export default function AddTodoForm() {
   };
 
   return (
-    <div className={styles.form}>
+    <div className='form'>
       <input
-        className={styles.addinput}
+        className='addinput'
         type="text"
         placeholder="Новое дело"
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
       />
-      <button className={styles.addbutton} onClick={handleAdd}>Добавить</button>
+      <button className='addbutton' onClick={handleAdd}>Добавить</button>
     </div>
   );
 }

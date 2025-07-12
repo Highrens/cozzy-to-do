@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useTodos } from '@/hooks/useTodos';
 import { useTodoStore } from '@/hooks/todos.store';
-import styles from './Header.module.css';
+import './Header.css';
 
 export default function Header() {
   const [input, setInput] = useState('');
@@ -18,17 +18,17 @@ export default function Header() {
   };
 
   return (
-    <header className={styles.header}>
-      <h1 className={styles.title}>Список дел</h1>
-      <div className={styles.inputGroup}>
+    <header className='header'>
+      <h1 className='title'>Список дел</h1>
+      <div className='inputGroup'>
         <input
           type="text"
           placeholder="Введите кодовое слово"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className={styles.input}
+          className='input'
         />
-        <button onClick={handleSubmit} className={styles.button}>
+        <button onClick={handleSubmit} className='button'>
           Загрузить
         </button>
       </div>
