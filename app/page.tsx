@@ -2,7 +2,6 @@
 'use client';
 
 import React from 'react';
-import './page.css';
 import Header from '@/components/Header';
 import {TodoList} from '@/components/TodoList';
 import AddTodoForm from '@/components/AddTodoForm';
