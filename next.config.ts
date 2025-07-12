@@ -3,8 +3,8 @@
 const nextConfig = {
   // Применяем basePath только для GitHub Pages
   ...(process.env.NODE_ENV === 'production' && {
-    basePath: '/your-repo-name',
-    assetPrefix: '/your-repo-name/',
+    basePath: '/cozzy-to-do',
+    assetPrefix: '/cozzy-to-do',
   }),
   eslint: {
     ignoreDuringBuilds: true,
