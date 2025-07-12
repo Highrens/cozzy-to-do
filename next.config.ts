@@ -2,13 +2,15 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-   eslint: {
+  eslint: {
     ignoreDuringBuilds: true,
   },
   images: {
     unoptimized: true
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/repository-name' : '',
+  basePath: '/cozzy-to-do/',
+  assetPrefix: '/cozzy-to-do/',
+
 }
 
 module.exports = nextConfig
