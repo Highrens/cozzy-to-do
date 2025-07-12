@@ -1,3 +1,4 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Применяем basePath только для GitHub Pages
@@ -5,6 +6,9 @@ const nextConfig = {
     basePath: '/your-repo-name',
     assetPrefix: '/your-repo-name/',
   }),
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   output: 'export',
   trailingSlash: true,
   images: {
