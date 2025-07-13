@@ -30,8 +30,8 @@
 }
 
 .button {
-  padding: 10px 16px;
-  background-color: var(--color-primary);
+  padding: 10px 10px;
+  background-color: #fff;
   color: white;
   font-weight: bold;
   border: none;

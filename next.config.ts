@@ -1,7 +1,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Применяем basePath только для GitHub Pages
+  //basePath только для GitHub Pages
   ...(process.env.NODE_ENV === 'production' && {
     basePath: '/cozzy-to-do',
     assetPrefix: '/cozzy-to-do',

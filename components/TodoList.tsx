@@ -32,22 +32,22 @@ export const TodoList = () => {
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  // Настраиваем сенсоры для работы с задержкой
-  const pointerSensor = useSensor(PointerSensor, {
+  // Настраиваем сенсоры для работы с мобильными устройствами
+  const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      delay: 100, // Задержка 100ms
-      tolerance: 10, // Допустимое движение в пикселях
+      distance: 8,
     },
   });
 
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
-      delay: 100,
-      tolerance: 10,
+      delay: 500, // Увеличиваем задержку для четкого различия между tap и drag
+      tolerance: 15,
     },
   });
 
-  const sensors = useSensors(pointerSensor, touchSensor);
+  // Используем mouse и touch сенсоры для стабильной работы
+  const sensors = useSensors(mouseSensor, touchSensor);
 
   const activeTodos = todos.filter((t) => !t.completed);
   const completedTodos = todos.filter((t) => t.completed);

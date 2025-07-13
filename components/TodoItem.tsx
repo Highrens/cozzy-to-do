@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSortable, AnimateLayoutChanges } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Todo } from '@/types/todo';
@@ -20,12 +20,6 @@ export const TodoItem: React.FC<Props> = ({
   onClick,
   animateLayoutChanges,
 }) => {
-  const [isDragMode, setIsDragMode] = useState(false);
-  const [isPointerDown, setIsPointerDown] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const startPosRef = useRef<{ x: number; y: number } | null>(null);
-
-  // Получаем методы из хука useTodos
   const { handleComplete, handleDelete, handleEdit } = useTodos();
 
   const {
@@ -42,160 +36,47 @@ export const TodoItem: React.FC<Props> = ({
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
-    // Используем transition от dnd-kit только когда НЕ активируем drag режим
-    transition: isDragMode ? 'rotate 0.3s ease, scale 0.3s ease, background-color 0.3s ease' : transition,
-    cursor: isDragMode ? 'grabbing' : 'pointer',
-    rotate: isDragMode ? '-5deg' : "0deg",
+    transition,
+    cursor: isDragging ? 'grabbing' : 'pointer',
     opacity: isDragging ? 0.8 : 1,
-    backgroundColor: isDragMode ? '#ffffffff' : '#ecececff',
-    scale: isDragMode ? 1.05 : 1,
+    backgroundColor: isDragging ? '#ffffffff' : '#ecececff',
+    scale: isDragging ? 1.05 : 1,
+    rotate: isDragging ? '-2deg' : "0deg",
     position: 'relative',
-    zIndex: isDragMode ? 1000 : 1,
+    zIndex: isDragging ? 1000 : 1,
   };
 
-  // Эффект для отслеживания окончания драга
-  useEffect(() => {
-    if (!isDragging && isDragMode) {
-      setIsDragMode(false);
-      setIsPointerDown(false);
-    }
-  }, [isDragging, isDragMode]);
-
-  // Локальные обработчики для кнопок
-  const handleCompleteClick = () => {
+  const handleCompleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Complete button clicked');
     handleComplete(todo.id, !todo.completed);
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     const newTitle = prompt('Новое название:', todo.title);
     if (newTitle && newTitle.trim() !== todo.title) {
       handleEdit(todo.id, newTitle.trim());
     }
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (confirm('Удалить это дело?')) {
       handleDelete(todo.id);
     }
   };
 
-  const clearDragState = () => {
-    setIsPointerDown(false);
-    setIsDragMode(false);
-    startPosRef.current = null;
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  };
-
-  const handlePointerDown = (e: React.PointerEvent) => {
-    // Проверяем, что клик НЕ по кнопке
+  const handleItemClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.tagName === 'BUTTON' || target.closest('button')) {
-      return;
+      return; // Не обрабатываем клики по кнопкам
     }
-
-    setIsPointerDown(true);
-    startPosRef.current = { x: e.clientX, y: e.clientY };
-
-    timeoutRef.current = setTimeout(() => {
-      setIsDragMode(true);
-      if (navigator.vibrate) {
-        navigator.vibrate(50);
-      }
-    }, 500);
-
-    if (listeners && listeners.onPointerDown) {
-      listeners && listeners.onPointerDown(e);
-    }
+    onClick();
   };
-
-  const handlePointerMove = (e: React.PointerEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.tagName === 'BUTTON' || target.closest('button')) {
-      return;
-    }
-
-    if (!isPointerDown || !startPosRef.current) return;
-
-    const deltaX = Math.abs(e.clientX - startPosRef.current.x);
-    const deltaY = Math.abs(e.clientY - startPosRef.current.y);
-
-    if (deltaX > 10 || deltaY > 10) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    }
-
-    if (listeners && listeners.onPointerMove) {
-      listeners && listeners.onPointerMove(e);
-    }
-  };
-
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (!isPointerDown) return;
-
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    if (listeners && listeners.onPointerUp) {
-      listeners && listeners.onPointerUp(e);
-    }
-
-    if (isDragMode) {
-      clearDragState();
-      return;
-    }
-
-    setIsPointerDown(false);
-
-    if (!isDragging) {
-      onClick();
-    }
-  };
-
-  const handlePointerLeave = (e: React.PointerEvent) => {
-    if (!isPointerDown) return;
-
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    if (!isDragMode) {
-      setIsPointerDown(false);
-    }
-  };
-
-  useEffect(() => {
-    const handleGlobalPointerUp = () => {
-      if (isPointerDown || isDragMode) {
-        clearDragState();
-      }
-    };
-
-    if (isPointerDown || isDragMode) {
-      document.addEventListener('pointerup', handleGlobalPointerUp);
-      document.addEventListener('pointercancel', handleGlobalPointerUp);
-    }
-
-    return () => {
-      document.removeEventListener('pointerup', handleGlobalPointerUp);
-      document.removeEventListener('pointercancel', handleGlobalPointerUp);
-    };
-  }, [isPointerDown, isDragMode]);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div className='todoWrapper'>
@@ -203,10 +84,8 @@ export const TodoItem: React.FC<Props> = ({
         ref={setNodeRef}
         style={style}
         {...attributes}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerLeave={handlePointerLeave}
+        {...listeners} // Оставляем только один раз
+        onClick={handleItemClick}
         className={`todoitem ${isSelected ? 'selected' : ''}`}
       >
         <div className='todo'>
@@ -216,33 +95,26 @@ export const TodoItem: React.FC<Props> = ({
         </div>
       </div>
       
-      {/* Кнопки появляются под карточкой */}
-      <div className={`${'actionsPanel'} ${isSelected && !isDragMode ? 'actionsVisible' : ''}`}>
+      <div className={`${'actionsPanel'} ${isSelected && !isDragging ? 'actionsVisible' : ''}`}>
         <div className={'actions'}>
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCompleteClick();
-            }}
+            onClick={handleCompleteClick}
             className='donebutton'
+            type="button"
           >
             {todo.completed ? 'Восстановить' : 'Завершить'}
           </button>
           <button
             className='editbutton'
-            onClick={(e) => {
-              e.stopPropagation();
-              handleEditClick();
-            }}
+            onClick={handleEditClick}
+            type="button"
           >
             Редактировать
           </button>
           <button
             className='deletebutton'
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDeleteClick();
-            }}
+            onClick={handleDeleteClick}
+            type="button"
           >
             Удалить
           </button>

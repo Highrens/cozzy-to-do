@@ -29,7 +29,7 @@ export default function Header() {
           className='input'
         />
         <button onClick={handleSubmit} className='button'>
-          Загрузить
+          🔍
         </button>
       </div>
     </header>

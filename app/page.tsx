@@ -15,9 +15,6 @@ export default function Home() {
       <Header />
       
       <AddTodoForm />
-
-      {<p className='status'>Загрузка...</p>}
-      
       { todos.length > 0 && <TodoList />}
       {todos.length === 0 && (
         <p className='status'>Нет дел по данному ключу</p>
